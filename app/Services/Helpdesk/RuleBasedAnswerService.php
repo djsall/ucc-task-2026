@@ -9,7 +9,7 @@ class RuleBasedAnswerService
 {
     public function __construct(protected User $user, protected string $question) {}
 
-    public function createMessage(): Message
+    public function handle(): Message
     {
         $message = $this->user->messages()->create([
             'question' => $this->question,
