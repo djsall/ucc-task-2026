@@ -7,16 +7,6 @@ use App\Models\User;
 
 class EventPolicy
 {
-    public function viewAny(User $user)
-    {
-        return true;
-    }
-
-    public function create(User $user)
-    {
-        return true;
-    }
-
     public function view(User $user, Event $event): bool
     {
         return $user->id === $event->user_id;

@@ -18,15 +18,11 @@ class EventController extends Controller
 
     public function index(Request $request): JsonResource
     {
-        $this->authorize('viewAny', Event::class);
-
         return EventResource::collection($request->user()->events()->paginate());
     }
 
     public function store(StoreEventRequest $request): JsonResource
     {
-        $this->authorize('create', Event::class);
-
         $event = $request->user()->events()->create($request->validated());
 
         return EventResource::make($event);

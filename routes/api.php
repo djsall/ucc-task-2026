@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PasswordResetController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('events', EventController::class)
         ->only(['index', 'store', 'show', 'update', 'destroy']);
+
+    Route::apiResource('messages', MessageController::class)->only(['index', 'store', 'show']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
