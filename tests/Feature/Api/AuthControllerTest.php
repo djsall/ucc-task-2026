@@ -51,7 +51,7 @@ test('user can logout', function () {
         ->postJson('/api/logout');
 
     $response->assertStatus(200)
-        ->assertJson(['message' => 'Logged out successfully']);
+        ->assertJson(['message' => __('auth.logout-success')]);
 
     $this->assertCount(0, $user->fresh()->tokens);
 });
