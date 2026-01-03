@@ -27,7 +27,7 @@ class MessageController extends Controller
         $user = $request->user();
         $message = $user->messages()->create($request->validated());
 
-        (new RuleBasedAnswerService($user, $message))->handle();
+        (new RuleBasedAnswerService($message))->handle();
 
         return MessageResource::make($message->fresh());
     }
