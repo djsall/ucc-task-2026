@@ -21,7 +21,6 @@ test('user can request a password reset link', function () {
 test('user can reset password with a valid token', function () {
     $user = User::factory()->create([
         'email' => 'test@example.com',
-        'password' => Hash::make('old-password'),
     ]);
 
     $token = Password::createToken($user);

@@ -2,19 +2,17 @@
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
 
 uses(RefreshDatabase::class);
 
 test('user can login with valid credentials', function () {
     $user = User::factory()->create([
         'email' => 'test@example.com',
-        'password' => Hash::make('password123'),
     ]);
 
     $response = $this->postJson('/api/login', [
         'email' => 'test@example.com',
-        'password' => 'password123',
+        'password' => 'password',
     ]);
 
     $response->assertStatus(200)
@@ -29,9 +27,8 @@ test('user can login with valid credentials', function () {
 });
 
 test('user cannot login with invalid password', function () {
-    $user = User::factory()->create([
+    User::factory()->create([
         'email' => 'test@example.com',
-        'password' => Hash::make('password123'),
     ]);
 
     $response = $this->postJson('/api/login', [
