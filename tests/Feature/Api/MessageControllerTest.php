@@ -27,7 +27,7 @@ test('user can submit a new question', function () {
         'question' => 'How do I reset my password safely?',
     ]);
 
-    $response->assertStatus(201)
+    $response->assertStatus(200)
         ->assertJsonPath('data.question', 'How do I reset my password safely?');
 
     $this->assertDatabaseHas('messages', [

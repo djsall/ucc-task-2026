@@ -6,28 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Message;
+use App\Services\Helpdesk\RuleBasedAnswerService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class MessageController extends Controller
 {
     use AuthorizesRequests;
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResource
     {
         $messages = $request->user()->messages()->latest()->paginate();
 
         return MessageResource::collection($messages);
     }
 
-    public function store(StoreMessageRequest $request)
+    public function store(StoreMessageRequest $request): JsonResource
     {
-        $message = $request->user()->messages()->create($request->validated());
+        $user = $request->user();
+        $message = $user->messages()->create($request->validated());
 
-        return MessageResource::make($message);
+        (new RuleBasedAnswerService($user, $message))->handle();
+
+        return MessageResource::make($message->fresh());
     }
 
-    public function show(Message $message)
+    public function show(Message $message): JsonResource
     {
         $this->authorize('view', $message);
 
