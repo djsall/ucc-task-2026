@@ -44,11 +44,11 @@ it('can update an existing event', function () {
     $event = Event::factory()->create(['user_id' => $this->user->id]);
 
     $response = $this->putJson("/api/events/{$event->id}", [
-        'name' => 'Updated Event Name',
+        'description' => 'Updated Event description',
     ]);
 
     $response->assertStatus(200);
-    expect($event->refresh()->name)->toBe('Updated Event Name');
+    expect($event->refresh()->description)->toBe('Updated Event description');
 });
 
 it('can delete an event', function () {
