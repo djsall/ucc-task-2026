@@ -2,23 +2,18 @@
 
 namespace App\Policies;
 
+use App\Enums\UserRole;
 use App\Models\Message;
 use App\Models\User;
 
 class MessagePolicy
 {
-    public function viewAny(User $user): bool
-    {
-        return true;
-    }
-
     public function view(User $user, Message $message): bool
     {
-        return $user->id === $message->user_id;
-    }
+        if ($user->role === UserRole::Helpdesk) {
+            return true;
+        }
 
-    public function create(User $user): bool
-    {
-        return true;
+        return $user->id === $message->user_id;
     }
 }
