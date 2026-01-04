@@ -8,6 +8,7 @@ use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Textarea;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -39,6 +40,10 @@ class MessageResource extends Resource
                     ->label('User email'),
                 TextEntry::make('created_at')
                     ->dateTime(),
+                IconEntry::make('requires_human')
+                    ->label('Human answer')
+                    ->falseColor(Color::Gray)
+                    ->trueColor(Color::Sky),
                 TextEntry::make('question')
                     ->columnSpanFull(),
                 Textarea::make('answer')
@@ -58,6 +63,10 @@ class MessageResource extends Resource
                     ->label('User email'),
                 TextEntry::make('created_at')
                     ->dateTime(),
+                IconEntry::make('requires_human')
+                    ->label('Human answer')
+                    ->falseColor(Color::Gray)
+                    ->trueColor(Color::Sky),
                 TextEntry::make('question')
                     ->columnSpanFull(),
                 TextEntry::make('answer')
@@ -72,16 +81,10 @@ class MessageResource extends Resource
             ->defaultPaginationPageOption(25)
             ->recordClasses(static fn (Message $record): ?string => blank($record->answer) ? 'bg-amber-500/10' : null)
             ->columns([
-                IconColumn::make('requires_human')
+                IconColumn::make('status')
                     ->label('Status')
                     ->boolean()
-                    ->getStateUsing(function (Message $record) {
-                        if (blank($record->answer)) {
-                            return false;
-                        }
-
-                        return ! $record->requires_human;
-                    })
+                    ->getStateUsing(fn (Message $record) => filled($record->answer))
                     ->falseIcon(Heroicon::OutlinedExclamationCircle)
                     ->falseColor(Color::Amber),
                 TextColumn::make('question')

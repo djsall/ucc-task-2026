@@ -13,7 +13,6 @@ class MessageSeeder extends Seeder
     public function run(): void
     {
         Message::factory(2)->forRandomUser()->create();
-        Message::factory(2)->forRandomUser()->unanswered()->create();
         Message::factory(2)->forRandomUser()->unanswered()->requiresHuman()->create();
     }
 }

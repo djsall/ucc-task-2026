@@ -28,8 +28,8 @@ it('displays the correct status icon based on the answer', function () {
     $answered = Message::factory()->forRandomUser()->create();
 
     livewire(ManageMessages::class)
-        ->assertTableColumnStateSet('requires_human', false, record: $unanswered)
-        ->assertTableColumnStateSet('requires_human', true, record: $answered);
+        ->assertTableColumnStateSet('status', false, record: $unanswered)
+        ->assertTableColumnStateSet('status', true, record: $answered);
 });
 
 it('filters unanswered messages correctly', function () {
