@@ -37,7 +37,8 @@ class MessageResource extends Resource
                     ->label('User name'),
                 TextEntry::make('user.email')
                     ->label('User email'),
-                TextEntry::make('created_at'),
+                TextEntry::make('created_at')
+                    ->dateTime(),
                 TextEntry::make('question')
                     ->columnSpanFull(),
                 Textarea::make('answer')
@@ -55,7 +56,8 @@ class MessageResource extends Resource
                     ->label('User name'),
                 TextEntry::make('user.email')
                     ->label('User email'),
-                TextEntry::make('created_at'),
+                TextEntry::make('created_at')
+                    ->dateTime(),
                 TextEntry::make('question')
                     ->columnSpanFull(),
                 TextEntry::make('answer')
@@ -84,6 +86,9 @@ class MessageResource extends Resource
                     ->falseColor(Color::Amber),
                 TextColumn::make('question')
                     ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 Filter::make('hide_answered')
