@@ -25,7 +25,7 @@ class MessageResource extends Resource
 {
     protected static ?string $model = Message::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChatBubbleBottomCenterText;
 
     protected static ?string $recordTitleAttribute = 'question';
 
