@@ -19,20 +19,29 @@
                tabindex="1"
                required
         />
+        <label for="occurrence">
+            Occurrence:
+        </label>
+        <input type="datetime-local" name="occurrence" id="occurrence"
+               class="border-2 mb-4 w-full rounded-lg p-2 disabled:bg-gray-200"
+               tabindex="2"
+        />
         <label for="description">
             Event description:
         </label>
         <textarea name="description" id="description"
                   class="border-2 mb-4 w-full rounded-lg p-2"
-                  tabindex="2"
+                  tabindex="3"
                   rows="4"
         ></textarea>
 
         <input type="submit" value="Save" id="submit"
                class="border-2 border-green-500 bg-green-500/5 hover:bg-green-500/20 text-green-500 rounded-lg p-2"
-               tabindex="3"
+               tabindex="4"
         />
     </form>
+
+    <p id="form-error"></p>
 
     <h2 class="text-2xl text-center mt-16 mb-4">
         View your events

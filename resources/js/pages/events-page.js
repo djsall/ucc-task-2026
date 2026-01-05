@@ -1,14 +1,16 @@
 import {fetchEvents, createEvent, updateEvent, deleteEvent} from '../events.js';
 import {isAuthenticated} from "../auth.js";
-import {showMessage} from "./common.js";
+import {clearErrors, showMessage} from "./common.js";
 
 const elements = {
     form: document.getElementById('form'),
     list: document.getElementById('list'),
     idField: document.getElementById('item-id'),
     nameField: document.getElementById('name'),
+    occurrenceField: document.getElementById('occurrence'),
     descriptionField: document.getElementById('description'),
     submitButton: document.getElementById('submit'),
+    errorContainer: document.getElementById('form-error'),
 };
 
 let events = [];
@@ -34,7 +36,9 @@ function render() {
     elements.list.innerHTML = events.map(event => `
         <li class="flex border mb-2 items-center justify-between p-2">
             <div>
-                <strong>${escapeHTML(event.name)}</strong>
+                <div>
+                    <strong>${escapeHTML(event.name)}</strong> - ${new Date(event.occurrence).toLocaleString()}
+                </div>
                 <p class="text-sm text-gray-600">${escapeHTML(event.description || '')}</p>
             </div>
             <div class="flex gap-2">
@@ -50,6 +54,7 @@ elements.form.addEventListener('submit', async (event) => {
     const id = elements.idField.value;
     const payload = {
         name: elements.nameField.value,
+        occurrence: elements.occurrenceField.value,
         description: elements.descriptionField.value
     };
 
@@ -58,13 +63,22 @@ elements.form.addEventListener('submit', async (event) => {
     try {
         if (id) {
             await updateEvent(id, {description: payload.description});
+
+            elements.idField.value = '';
+            elements.nameField.disabled = false;
+            elements.occurrenceField.disabled = false;
         } else {
+            if (! payload.name || ! payload.occurrence) {
+                showMessage(elements.errorContainer, 'Please enter a name and occurrence', 'error');
+
+                return;
+            }
+
             await createEvent(payload);
+            clearErrors(elements.errorContainer);
         }
 
         elements.form.reset();
-        elements.idField.value = '';
-        elements.nameField.disabled = false;
         await syncEvents();
     } finally {
         elements.submitButton.disabled = false;
@@ -83,6 +97,8 @@ elements.list.addEventListener('click', async (event) => {
             elements.idField.value = item.id;
             elements.nameField.value = item.name;
             elements.nameField.disabled = true;
+            elements.occurrenceField.value = item.occurrence;
+            elements.occurrenceField.disabled = true;
             elements.descriptionField.value = item.description;
             elements.descriptionField.focus();
         }

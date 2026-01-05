@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     {
         User::factory()->create([
             'name' => 'Api User',
-            'email' => 'user@example.com',
+            'email' => 'test@example.com',
         ]);
 
         User::factory()->helpdesk()->create([

@@ -14,6 +14,7 @@ class EventFactory extends Factory
     {
         return [
             'name' => fake()->sentence(4),
+            'occurrence' => fake()->dateTime(),
             'description' => fake()->text(),
         ];
     }

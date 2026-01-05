@@ -12,8 +12,15 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'name', 'description',
+        'user_id', 'name', 'occurrence', 'description',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'occurrence' => 'datetime',
+        ];
+    }
 
     public function user(): BelongsTo
     {

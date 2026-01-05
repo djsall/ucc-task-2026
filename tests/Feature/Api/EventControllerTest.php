@@ -26,6 +26,7 @@ it('can list events belonging to the user', function () {
 it('can create a new event', function () {
     $payload = [
         'name' => 'Laravel Meetup',
+        'occurrence' => now()->addDays(7),
         'description' => 'A gathering of PHP enthusiasts.',
     ];
 
@@ -36,11 +37,13 @@ it('can create a new event', function () {
 
     $this->assertDatabaseHas('events', [
         'user_id' => $this->user->id,
-        'name' => 'Laravel Meetup',
+        'name' => $payload['name'],
+        'occurrence' => $payload['occurrence']->toDateTimeString(),
+        'description' => $payload['description'],
     ]);
 });
 
-it('can update an existing event', function () {
+it('can update an existing event description', function () {
     $event = Event::factory()->create(['user_id' => $this->user->id]);
 
     $response = $this->putJson("/api/events/{$event->id}", [

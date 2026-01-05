@@ -1,12 +1,7 @@
 import {request, setToken, clearToken} from './api';
 
 async function login(data) {
-    const payload = {
-        email: data.email,
-        password: data.password
-    }
-
-    const response = await request('POST', '/login', payload);
+    const response = await request('POST', '/login', data);
 
     if (response.token) {
         setToken(response.token);

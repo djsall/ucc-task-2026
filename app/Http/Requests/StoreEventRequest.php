@@ -10,6 +10,7 @@ class StoreEventRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'occurrence' => ['required', 'date'],
             'description' => ['nullable', 'string'],
         ];
     }
