@@ -17,7 +17,7 @@ class MessageController extends Controller
 
     public function index(Request $request): JsonResource
     {
-        $messages = $request->user()->messages()->latest()->paginate();
+        $messages = $request->user()->messages()->latest()->get();
 
         return MessageResource::collection($messages);
     }

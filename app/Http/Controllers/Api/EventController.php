@@ -18,7 +18,9 @@ class EventController extends Controller
 
     public function index(Request $request): JsonResource
     {
-        return EventResource::collection($request->user()->events()->paginate());
+        $events = $request->user()->events()->get();
+
+        return EventResource::collection($events);
     }
 
     public function store(StoreEventRequest $request): JsonResource
