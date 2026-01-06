@@ -25,7 +25,7 @@ class HelpdeskPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('helpdesk')
-            ->path('helpdesk')
+            ->path('helpdesk-admin')
             ->viteTheme('resources/css/filament/helpdesk/theme.css')
             ->login()
             ->topNavigation()
